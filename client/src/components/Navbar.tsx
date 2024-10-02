@@ -17,8 +17,34 @@ const Navbar = () => {
     }, [loginCheck]);
 
     const checkSignedup = () => {
-        if() {
-            
+        if(auth.signedUp()) {
+            setSignupCheck(true);
         }
-    }
+    };
+    useEffect(() => {
+        checkSignedup();
+    }, [signupCheck]);
+
+    return (
+        <div>
+            <h1>
+                Authentication 
+            </h1>
+            <div>
+                {
+                    !loginCheck ? (
+                        <button className = "btn" type = "button">
+                            <Link to = '/login'>Login</Link>
+                        </button>
+                    ): (
+                        <button className = "btn" type = 'button' onClick={() => {
+                            auth.logout();
+                        }}>Logout</button>
+                    )
+                }
+            </div>
+        </div>
+    )
 }
+
+export default Navbar;
