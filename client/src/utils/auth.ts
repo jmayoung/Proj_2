@@ -8,7 +8,7 @@ class AuthService {
 
     //Gets/retrieves the token from the local storage
     getToken(): string {
-        const loggedUSer = localStorage.getItem('id_token') || '';
+        const loggedUSer = localStorage.getItem('id_token') || ('email_token');
         return loggedUSer;
     }
 
@@ -24,3 +24,5 @@ class AuthService {
         window.location.assign('/');
     }
 }
+
+export default new AuthService();

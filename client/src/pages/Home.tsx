@@ -1,16 +1,21 @@
 import React, { useState } from 'react';
 
+interface Recipe {
+  id: number;
+  title: string;
+}
+
 const App = () => {
   const [ingredients, setIngredients] = useState('');
-  const [recipes, setRecipes] = useState([]);
+  const [recipes, setRecipes] = useState<Recipe[]>([]);
 
   const fetchRecipes = async () => {
-    const response = await fetch(`https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredients}&apiKey=YOUR_API_KEY`);
+    const response = await fetch(`https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredients}&apiKey=512a655e48f54350ab4a1694077b9966`);
     const data = await response.json();
     setRecipes(data);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     fetchRecipes();
   };
