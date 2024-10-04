@@ -1,5 +1,5 @@
 import { DataTypes, Sequelize, Model, Optional} from 'sequelize';
-import bcrypt from 'bcrypt';
+
 
 interface RecipeAttributes {
     id: number;
@@ -15,13 +15,22 @@ export class Recipe extends Model<RecipeAttributes, RecipeCreationAttributes> im
     public readonly updatedAt!: Date;
 }
 
-export function recipeFactory(sequelize: Sequelize): typeof Recipe {
+export function recipeFactory(): typeof Recipe {
     Recipe.init(
         {
             id: {
-                type
-            }
+                type: DataTypes.INTEGER,
+                primaryKey: true,
+            },
+            title: {
+                type: DataTypes.STRING,
+                allowNull: false,
+            },
+        },
+        {
+            tableName: 'recipes',
+            sequelize: new Sequelize
         }
-    )
+    );
     return Recipe;
 }
