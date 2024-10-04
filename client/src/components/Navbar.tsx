@@ -46,5 +46,5 @@ const Navbar = () => {
         </div>
     )
 }
-
+export {loginCheck, signupCheck};
 export default Navbar;
