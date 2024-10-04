@@ -1,6 +1,7 @@
 
 import React from 'react';
-
+import {loginCheck, signupCheck} from "./Navbar"
+import { Link } from 'react-router-dom';
 const Header = () => { 
 
 return (
@@ -26,11 +27,7 @@ return (
                     </li>
                 </>
             )}
-            {!signupCheck && (
-                <li>
-                    <Link to="/Contact-us">Contact Us</Link>
-                </li>
-            )}
+            {!signupCheck}
         </ul>
     </nav>
         </header>
