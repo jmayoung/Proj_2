@@ -19,7 +19,7 @@ export class Cocktail extends Model<CocktailAttributes, CocktailCreationAttribut
 
 }
 
-export function CocktailFactory(): typeof Cocktail {
+export function CocktailFactory(sequelize: Sequelize): typeof Cocktail {
     Cocktail.init(
         {
             id: {
@@ -33,7 +33,7 @@ export function CocktailFactory(): typeof Cocktail {
         },
         {
             tableName: 'cocktails',
-            sequelize: new Sequelize
+            sequelize: sequelize 
         }
     );
     return Cocktail;

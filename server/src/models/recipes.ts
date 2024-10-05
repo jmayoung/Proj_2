@@ -15,7 +15,7 @@ export class Recipe extends Model<RecipeAttributes, RecipeCreationAttributes> im
     public readonly updatedAt!: Date;
 }
 
-export function recipeFactory(): typeof Recipe {
+export function recipeFactory(sequelize: Sequelize): typeof Recipe {
     Recipe.init(
         {
             id: {
@@ -29,7 +29,7 @@ export function recipeFactory(): typeof Recipe {
         },
         {
             tableName: 'recipes',
-            sequelize: new Sequelize
+            sequelize: sequelize 
         }
     );
     return Recipe;
