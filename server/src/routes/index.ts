@@ -1,11 +1,16 @@
-import apiRoutes from './api/index';
+import apiRoutes from './api/index.js';
 import dotenv from 'dotenv';
-import express from 'express';
+import { Router } from 'express';
+import authRoutes from './auth-routes.js'
+import { authenticateToken } from '../middleware/auth.js';
+
+
 dotenv.config();
 
 //TODO: import your routes
-const router = express.Router();
+const router = Router();
 
-router.use('/api', apiRoutes); 
+router.use('/api', authenticateToken, apiRoutes); 
+router.use('/auth', authRoutes)
 
 export default router;

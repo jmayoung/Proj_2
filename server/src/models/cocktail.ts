@@ -1,13 +1,12 @@
 import { DataTypes, Sequelize, Model, Optional} from 'sequelize';
 
 
-//DEfine the attributes for the Cocktail model
+
 interface CocktailAttributes {
     id: number;
     name: string;
 }
 
-//Define the optional attributes for creating a new Cocktail 
 interface CocktailCreationAttributes extends Optional<CocktailAttributes, 'id'> {}
 
 export class Cocktail extends Model<CocktailAttributes, CocktailCreationAttributes> implements CocktailAttributes {
