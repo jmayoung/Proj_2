@@ -1,8 +1,11 @@
-import { Router } from 'express';
+import apiRoutes from './api/index';
+import dotenv from 'dotenv';
+import express from 'express';
+dotenv.config();
+
 //TODO: import your routes
+const router = express.Router();
 
-const router = Router();
-
-//router.use('/api', apiRoutes); <- here you should put your routes
+router.use('/api', apiRoutes); 
 
 export default router;
