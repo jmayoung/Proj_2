@@ -7,9 +7,8 @@ const Body = () => {
     const [recipes, setRecipes] = useState<any[]>([]);
     const navigate = useNavigate();
 
-    // Load recipes from sessionStorage on component mount
     useEffect(() => {
-        const storedRecipes = sessionStorage.getItem('recipes');
+        const storedRecipes = localStorage.getItem('recipes');
         if (storedRecipes) {
             setRecipes(JSON.parse(storedRecipes));
         }
@@ -30,8 +29,8 @@ const Body = () => {
                 `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredientsString}&number=5&apiKey=${apiKey}`
             );
             const data = await response.json();
-            setRecipes(data);  // Save recipes in state
-            sessionStorage.setItem('recipes', JSON.stringify(data));  // Store in sessionStorage
+            setRecipes(data); 
+            localStorage.setItem('recipes', JSON.stringify(data));  
         } catch (error) {
             console.error("Error fetching recipes:", error);
         }
@@ -44,6 +43,7 @@ const Body = () => {
     return (
         <>
             <h1>What's in your Kitchen?</h1>
+            <h2>Input ingredients you have on hand, get recipes that contain those ingredients</h2>
             <input 
                 type="text" 
                 value={inputValue} 
@@ -56,14 +56,15 @@ const Body = () => {
                 ))}
             </ul>
             <button onClick={fetchRecipes}>Find Recipes</button>
-            <ul>
+
+            <div className="recipe-grid">
                 {recipes.map((recipe, index) => (
-                    <li key={index}>
-                        <h3 onClick={() => handleRecipeClick(recipe.id)}>{recipe.title}</h3>
-                        <img src={recipe.image} alt={recipe.title} width="100" />
-                    </li>
+                    <div className="recipe-card" key={index} onClick={() => handleRecipeClick(recipe.id)}>
+                        <img src={recipe.image} alt={recipe.title} className="recipe-image" />
+                        <h3>{recipe.title}</h3>
+                    </div>
                 ))}
-            </ul>
+            </div>
         </>
     );
 };
