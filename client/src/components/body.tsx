@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 const Body = () => {
     const [ingredients, setIngredients] = useState<string[]>([]);
     const [inputValue, setInputValue] = useState<string>("");
@@ -11,7 +11,7 @@ const Body = () => {
     }
 
     const fetchRecipes = async () => {
-        const apiKey = 'YOUR_SPOONACULAR_API_KEY';
+        const apiKey = '512a655e48f54350ab4a1694077b9966';
         const ingredientsString = ingredients.join(',+');
         try {
             const response = await fetch(`https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredientsString}&number=5&apiKey=${apiKey}`);

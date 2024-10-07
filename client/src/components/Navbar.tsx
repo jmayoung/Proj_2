@@ -1,6 +1,6 @@
 import { useState, useEffect} from 'react';
 import { Link} from 'react-router-dom';
-import auth from '';
+import auth from '../utils/auth';
 
 const Navbar = () => {
 
@@ -17,9 +17,9 @@ const Navbar = () => {
     }, [loginCheck]);
 
     const checkSignedup = () => {
-        if(auth.signedUp()) {
-            setSignupCheck(true);
-        }
+        //if(auth.signedUp()) {
+        //    setSignupCheck(true);
+        //}
     };
     useEffect(() => {
         checkSignedup();
@@ -34,7 +34,7 @@ const Navbar = () => {
                 {
                     !loginCheck ? (
                         <button className = "btn" type = "button">
-                            <Link to = '/login'>Login</Link>
+                            <Link to = '/login' relative='path'>Login</Link>
                         </button>
                     ): (
                         <button className = "btn" type = 'button' onClick={() => {
@@ -46,5 +46,5 @@ const Navbar = () => {
         </div>
     )
 }
-export {loginCheck, signupCheck};
+//export {loginCheck, signupCheck};
 export default Navbar;
