@@ -81,10 +81,45 @@
 
 .cocktail-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(4, 1fr); /* 4 columns on large screens */
+  gap: 20px; /* Space between items */
+  padding: 20px; /* Padding around the grid */
 }
 
 .cocktail-item {
-  text-align: center;
+  background-color: #f8f8f8; /* Light background for cocktail items */
+  border: 1px solid #ddd; /* Light border */
+  border-radius: 8px; /* Rounded corners */
+  padding: 10px; /* Padding inside each item */
+  text-align: center; /* Center align text */
+  transition: transform 0.3s; /* Animation for hover effect */
+}
+
+.cocktail-item:hover {
+  transform: scale(1.05); /* Scale up on hover */
+}
+
+.cocktail-item img {
+  border-radius: 8px; /* Rounded corners for images */
+  max-width: 100%; /* Responsive image width */
+  height: auto; /* Maintain aspect ratio */
+}
+
+/* Responsive styles */
+@media (max-width: 1200px) {
+  .cocktail-grid {
+      grid-template-columns: repeat(3, 1fr); /* 3 columns on medium screens */
+  }
+}
+
+@media (max-width: 800px) {
+  .cocktail-grid {
+      grid-template-columns: repeat(2, 1fr); /* 2 columns on small screens */
+  }
+}
+
+@media (max-width: 500px) {
+  .cocktail-grid {
+      grid-template-columns: 1fr; /* 1 column on extra small screens */
+  }
 }

@@ -1,37 +1,33 @@
-import { Sequelize, DataTypes, Model } from 'sequelize';
+import { Sequelize, DataTypes, Model, Optional } from 'sequelize';
+import sequelize from '../config/connection.js';
 
+interface UserAttributes {
+  id: number;
+  username: string;
+  password: string;
+}
+interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {}
 
 export class User extends Model {
   public id!: number;
   public username!: string;
   public password!: string;
-
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
 }
 export function UserFactory(sequelize: Sequelize): typeof User {
-User.init(
-  {
-    id: {
-      type: DataTypes.INTEGER.UNSIGNED,
-      autoIncrement: true,
-      primaryKey: true,
-    },
+  User.init({
     username: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,  // Ensure that usernames are unique
+      unique: true,
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: false,  // Password must be provided
+      allowNull: false,
     },
-  },
-  {
-    sequelize,  // Pass the Sequelize instance
-    tableName: 'users',  // The name of your database table
-    timestamps: true,    // Automatically add createdAt and updatedAt timestamps
-  }
-)
-return User;
-};
+  }, {
+    sequelize, 
+    modelName: 'User',
+  })
+  return User};
+
+

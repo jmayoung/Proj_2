@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
 const RecipeDetails = () => {
-    const { id } = useParams<{ id: string }>();  // Get recipe ID from URL
+    const { id } = useParams<{ id: string }>();  
     const [ingredients, setIngredients] = useState<any[]>([]);
-    const [recipeImage, setRecipeImage] = useState<string>('');  // State for recipe image
-    const [recipeTitle, setRecipeTitle] = useState<string>('');  // State for recipe title
-    const [recipeLink, setRecipeLink] = useState<string>('');    // State for recipe link (sourceUrl)
+    const [recipeImage, setRecipeImage] = useState<string>('');  
+    const [recipeTitle, setRecipeTitle] = useState<string>('');  
+    const [recipeLink, setRecipeLink] = useState<string>('');    
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -17,10 +17,10 @@ const RecipeDetails = () => {
                     `https://api.spoonacular.com/recipes/${id}/information?apiKey=${apiKey}`
                 );
                 const data = await response.json();
-                setIngredients(data.extendedIngredients);  // Store ingredients
-                setRecipeImage(data.image);  // Store recipe image
-                setRecipeTitle(data.title);  // Store recipe title
-                setRecipeLink(data.sourceUrl);  // Store recipe link (sourceUrl)
+                setIngredients(data.extendedIngredients);  
+                setRecipeImage(data.image);  
+                setRecipeTitle(data.title); 
+                setRecipeLink(data.sourceUrl);  
             } catch (error) {
                 console.error('Error fetching recipe details:', error);
             }

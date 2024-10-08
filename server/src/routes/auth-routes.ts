@@ -1,33 +1,42 @@
 import { Router, Request, Response } from 'express';
-import { User } from '../models/user.js';  // Import the User model
+import { User }  from '../models/user.js';  // Import the User model
 import jwt from 'jsonwebtoken';  // Import the JSON Web Token library
 import bcrypt from 'bcrypt';  // Import bcrypt for password hashing
 
 // Register function to create a new user
 export const register = async (req: Request, res: Response) => {
-  const { username, password } = req.body;  // Extract username and password from request body
+  const { username, password } = req.body;
+  console.log('Registering user:', username); // Log the username
 
-  // Check if the username already exists
-  const existingUser = await User.findOne({ where: { username } });
-  if (existingUser) {
-    return res.status(400).json({ message: 'Username already taken' });
+  try {
+    const existingUser = await User.findOne({ where: { username } });
+    console.log('Existing user:', existingUser); // Log the existing user
+
+    if (existingUser) {
+      return res.status(400).json({ message: 'Username already taken' });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = await User.create({
+      username,
+      password: hashedPassword,
+    });
+
+    const secretKey = process.env.JWT_SECRET_KEY || '';
+    const token = jwt.sign({ username }, secretKey, { expiresIn: '1h' });
+
+    return res.status(201).json({ 
+      message: 'User registered successfully',
+      user: { id: newUser.id, username: newUser.username},
+      token
+     });
+    
+  } catch (error) {
+    console.error('Error during registration:', error); // Log the error
+    return res.status(500).json({ message: 'Internal server error' });
   }
-
-  // Hash the password
-  const hashedPassword = await bcrypt.hash(password, 10);  // Hash password with bcrypt
-
-  // Create a new user with the hashed password
-  const newUser = await User.create({
-    username,
-    password: hashedPassword,  // Store the hashed password
-  });
-
-  // Generate a JWT token for the new user
-  const secretKey = process.env.JWT_SECRET_KEY || '';
-  const token = jwt.sign({ username }, secretKey, { expiresIn: '1h' });
-
-  return res.status(201).json({ token });  // Send the token as a JSON response
 };
+
 
 // Login function to authenticate a user
 export const login = async (req: Request, res: Response) => {
