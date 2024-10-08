@@ -1,50 +1,20 @@
-import { useState, useEffect} from 'react';
-import { Link} from 'react-router-dom';
-import auth from '../utils/auth';
+import { Link } from 'react-router-dom';
+import React from 'react';
 
-const Navbar = () => {
-
-    const [loginCheck, setLoginCheck] = useState(false);
-    const [signupCheck, setSignupCheck] = useState(false);
-
-    const checkLogin = () => {
-        if (auth.loggedIn()) {
-            setLoginCheck(true);
-        }
-    };
-    useEffect(() => {
-        checkLogin();
-    }, [loginCheck]);
-
-    const checkSignedup = () => {
-        //if(auth.signedUp()) {
-        //    setSignupCheck(true);
-        //}
-    };
-    useEffect(() => {
-        checkSignedup();
-    }, [signupCheck]);
-
-    return (
-        <div>
-            <h1>
-                Authentication 
-            </h1>
-            <div>
-                {
-                    !loginCheck ? (
-                        <button className = "btn" type = "button">
-                            <Link to = '/login' relative='path'>Login</Link>
-                        </button>
-                    ): (
-                        <button className = "btn" type = 'button' onClick={() => {
-                            auth.logout();
-                        }}>Logout</button>
-                    )
-                }
-            </div>
-        </div>
-    )
+interface NavbarProps {
+    onLoginClick: () => void; 
 }
-//export {loginCheck, signupCheck};
+
+const Navbar: React.FC<NavbarProps> = ({ onLoginClick }) => {
+    return (
+        <nav className="navbar">
+            <ul>
+            <li><Link to="/CocktailBody">Cocktail Recipes</Link></li>
+                <li><Link to="/saved-recipes">Saved Recipes</Link></li>
+                <li onClick={onLoginClick} style={{ cursor: 'pointer' }}>Log In</li>
+            </ul>
+        </nav>
+    );
+};
+
 export default Navbar;

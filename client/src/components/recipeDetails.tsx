@@ -26,14 +26,14 @@ const RecipeDetails = () => {
             }
         };
         fetchRecipeDetails();
-    }, [id]);  // Fetch recipe details when the component mounts
+    }, [id]); 
 
     return (
         <>
-            <button onClick={() => navigate(-1)}>Back to Recipes</button> {/* Back button */}
+            <button onClick={() => navigate(-1)}>Back to Recipes</button> 
             
-            <h1>{recipeTitle}</h1>  {/* Display recipe title */}
-            <img src={recipeImage} alt={recipeTitle} width="300" />  {/* Display recipe image */}
+            <h1>{recipeTitle}</h1>  
+            <img src={recipeImage} alt={recipeTitle} width="300" />  
             
             <h2>Ingredients</h2>
             <ul>

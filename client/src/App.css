@@ -79,3 +79,12 @@
   color: #333;
 }
 
+.cocktail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.cocktail-item {
+  text-align: center;
+}

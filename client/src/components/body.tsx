@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Navbar from './Navbar';
+import LoginModal from './loginModal';
 
-const Body = () => {
+const Body: React.FC = () => {
     const [ingredients, setIngredients] = useState<string[]>([]);
     const [inputValue, setInputValue] = useState<string>("");
     const [recipes, setRecipes] = useState<any[]>([]);
+    const [showLoginModal, setShowLoginModal] = useState<boolean>(false); 
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -40,32 +43,47 @@ const Body = () => {
         navigate(`/recipe/${recipeId}`);
     };
 
-    return (
-        <>
-            <h1>What's in your Kitchen?</h1>
-            <h2>Input ingredients you have on hand, get recipes that contain those ingredients</h2>
-            <input 
-                type="text" 
-                value={inputValue} 
-                onChange={(e) => setInputValue(e.target.value)} 
-            />
-            <button onClick={addIngredient}>Add Ingredient</button>
-            <ul>
-                {ingredients.map((ingredient, index) => (
-                    <li key={index}>{ingredient}</li>
-                ))}
-            </ul>
-            <button onClick={fetchRecipes}>Find Recipes</button>
+    // Function to open the login modal
+    const handleLoginClick = () => {
+        setShowLoginModal(true);
+    };
 
-            <div className="recipe-grid">
-                {recipes.map((recipe, index) => (
-                    <div className="recipe-card" key={index} onClick={() => handleRecipeClick(recipe.id)}>
-                        <img src={recipe.image} alt={recipe.title} className="recipe-image" />
-                        <h3>{recipe.title}</h3>
-                    </div>
-                ))}
-            </div>
-        </>
+    // Function to close the login modal
+    const handleCloseModal = () => {
+        setShowLoginModal(false);
+    };
+
+    return (
+        <div>
+            <Navbar onLoginClick={handleLoginClick} /> {/* Pass the login handler to Navbar */}
+            <LoginModal show={showLoginModal} handleClose={handleCloseModal} /> {/* Render the LoginModal */}
+
+            <>
+                <h1>What's in your Kitchen?</h1>
+                <h2>Input ingredients you have on hand, get recipes that contain those ingredients</h2>
+                <input 
+                    type="text" 
+                    value={inputValue} 
+                    onChange={(e) => setInputValue(e.target.value)} 
+                />
+                <button onClick={addIngredient}>Add Ingredient</button>
+                <ul>
+                    {ingredients.map((ingredient, index) => (
+                        <li key={index}>{ingredient}</li>
+                    ))}
+                </ul>
+                <button onClick={fetchRecipes}>Find Recipes</button>
+
+                <div className="recipe-grid">
+                    {recipes.map((recipe, index) => (
+                        <div className="recipe-card" key={index} onClick={() => handleRecipeClick(recipe.id)}>
+                            <img src={recipe.image} alt={recipe.title} className="recipe-image" />
+                            <h3>{recipe.title}</h3>
+                        </div>
+                    ))}
+                </div>
+            </>
+        </div>
     );
 };
 
