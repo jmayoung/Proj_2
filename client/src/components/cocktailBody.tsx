@@ -25,7 +25,7 @@ const CocktailBody = () => {
         try {
             const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredientString}`);
             const data = await response.json();
-            console.log(data); // Log the response
+            console.log(data); 
             if (data.drinks && Array.isArray(data.drinks)) {
                 setCocktails(data.drinks);
             } else {
