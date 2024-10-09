@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import React from 'react';
-
+import "./navbar.css"
 interface NavbarProps {
     onLoginClick: () => void; 
 }

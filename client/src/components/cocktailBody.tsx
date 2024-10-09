@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import "./cocktailbody.css";
 const CocktailBody = () => {
     const [ingredients, setIngredients] = useState<string[]>([]);
     const [cocktails, setCocktails] = useState<any[]>([]);
@@ -38,20 +38,21 @@ const CocktailBody = () => {
     };
 
     return (
-        <div>
-            <h1>What's in your Bar?</h1>
+        <div className="cocktail-body-container">
+            <h1 className="cocktail-title">What's in your Bar?</h1>
             <input 
                 type="text" 
                 value={inputValue} 
                 onChange={(e) => setInputValue(e.target.value)} 
+                className="cocktail-input"
             />
-            <button onClick={addIngredient}>Add Ingredient</button>
-            <ul>
+            <button onClick={addIngredient} className="add-ingredient-button">Add Ingredient</button>
+            <ul className="ingredient-list">
                 {ingredients.map((ingredient, index) => (
-                    <li key={index}>{ingredient}</li>
+                    <li key={index} className="ingredient-item">{ingredient}</li>
                 ))}
             </ul>
-            <button onClick={fetchCocktails}>Find Cocktails</button>
+            <button onClick={fetchCocktails} className="fetch-cocktails-button">Find Cocktails</button>
 
             <div className="cocktail-grid">
                 {cocktails.length > 0 ? (
@@ -59,18 +60,18 @@ const CocktailBody = () => {
                         <div 
                             className="cocktail-item" 
                             key={cocktail.idDrink} 
-                            onClick={() => navigate(`/cocktail/${cocktail.idDrink}`)} // Navigate to cocktail details
+                            onClick={() => navigate(`/cocktail/${cocktail.idDrink}`)}
                         >
-                            <h3>{cocktail.strDrink}</h3>
-                            <img src={cocktail.strDrinkThumb} alt={cocktail.strDrink} width="100" />
+                            <h3 className="cocktail-name">{cocktail.strDrink}</h3>
+                            <img src={cocktail.strDrinkThumb} alt={cocktail.strDrink} width="100" className="cocktail-image" />
                         </div>
                     ))
                 ) : (
-                    <p>No cocktails found.</p>
+                    <p className="no-cocktails-message">No cocktails found.</p>
                 )}
             </div>
 
-            <button onClick={() => navigate('/')}>Back to Main Page</button>
+            <button onClick={() => navigate('/')} className="back-button">Back to Main Page</button>
         </div>
     );
 };

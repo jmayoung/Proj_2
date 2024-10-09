@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import './RecipeDetails.css';
 
 const RecipeDetails = () => {
     const { id } = useParams<{ id: string }>();  
@@ -11,7 +12,7 @@ const RecipeDetails = () => {
 
     useEffect(() => {
         const fetchRecipeDetails = async () => {
-            const apiKey = '512a655e48f54350ab4a1694077b9966';
+            const apiKey = 'YOUR_SPOONACULAR_API_KEY';
             try {
                 const response = await fetch(
                     `https://api.spoonacular.com/recipes/${id}/information?apiKey=${apiKey}`
@@ -29,27 +30,27 @@ const RecipeDetails = () => {
     }, [id]); 
 
     return (
-        <>
-            <button onClick={() => navigate(-1)}>Back to Recipes</button> 
+        <div className="recipe-details-container">
+            <button onClick={() => navigate(-1)} className="back-button">Back to Recipes</button> 
             
-            <h1>{recipeTitle}</h1>  
-            <img src={recipeImage} alt={recipeTitle} width="300" />  
+            <h1 className="recipe-title">{recipeTitle}</h1>  
+            <img src={recipeImage} alt={recipeTitle} width="300" className="recipe-image" />  
             
-            <h2>Ingredients</h2>
-            <ul>
+            <h2 className="ingredients-title">Ingredients</h2>
+            <ul className="ingredient-list">
                 {ingredients.map((ingredient, index) => (
-                    <li key={index}>{ingredient.original}</li>
+                    <li key={index} className="ingredient-item">{ingredient.original}</li>
                 ))}
             </ul>
 
             {recipeLink && (
                 <p>
-                    <a href={recipeLink} target="_blank" rel="noopener noreferrer">
-                        Does think sound good? Click here for cooking instructions!
+                    <a href={recipeLink} target="_blank" rel="noopener noreferrer" className="recipe-link">
+                        Does this sound good? Click here for cooking instructions!
                     </a>
                 </p>
             )}
-        </>
+        </div>
     );
 };
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-
+import "./cocktailDetails.css"
 const CocktailDetails = () => {
     const { id } = useParams<{ id: string }>(); 
     const [cocktail, setCocktail] = useState<any>(null);
@@ -21,22 +21,22 @@ const CocktailDetails = () => {
         fetchCocktailDetails();
     }, [id]);
 
-    if (!cocktail) return <div>Loading...</div>; 
+    if (!cocktail) return <div className="loading">Loading...</div>; 
 
     return (
-        <div>
-            <h1>{cocktail.strDrink}</h1>
-            <img src={cocktail.strDrinkThumb} alt={cocktail.strDrink} width="200" />
-            <h3>Ingredients:</h3>
-            <ul>
+        <div className="cocktail-details-container">
+            <h1 className="cocktail-title">{cocktail.strDrink}</h1>
+            <img src={cocktail.strDrinkThumb} alt={cocktail.strDrink} width="200" className="cocktail-image" />
+            <h3 className="ingredient-title">Ingredients:</h3>
+            <ul className="ingredient-list">
                 {Object.keys(cocktail)
                     .filter(key => key.startsWith('strIngredient') && cocktail[key]) 
                     .map((key, index) => (
-                        <li key={index}>{cocktail[key]}: {cocktail[`strMeasure${index + 1}`]}</li>
+                        <li key={index} className="ingredient-item">{cocktail[key]}: {cocktail[`strMeasure${index + 1}`]}</li>
                     ))}
             </ul>
-            <p>{cocktail.strInstructions}</p> 
-            <button onClick={() => navigate('/cocktail')}>Back to Cocktails</button> {/* Update to navigate to /cocktail */}
+            <p className="instructions">{cocktail.strInstructions}</p> 
+            <button onClick={() => navigate('/cocktail')} className="back-button">Back to Cocktails</button>
         </div>
     );
 };
