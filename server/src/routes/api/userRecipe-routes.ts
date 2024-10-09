@@ -1,36 +1,38 @@
-import express from 'express';
-import type { Request, Response } from 'express';
-import { UserRecipe } from '../../models/index.js';
+import express, { Request, Response } from 'express';
+import { UserRecipe } from '../../models/userRecipes.js';
+
 const router = express.Router();
 
+interface SaveRecipeRequestBody {
+    username: string; 
+    recipeID: number;
+}
 
-router.get('/:username', async(req: Request, res: Response) => {
+// POST route to save a recipe
+router.post('/', async (req: Request<{}, {}, SaveRecipeRequestBody>, res: Response) => {
+    const { username, recipeID } = req.body;  
+
     try {
-        const recipes = await UserRecipe.findAll({
-            where: { username: req.params.username }
-        });
-        res.json(recipes);
-    } catch(error: any) {
-        res.status(500).json({message: error.message})
+   
+        const userRecipe = await UserRecipe.create({ username, recipeID });
+        res.status(201).json({ message: 'Recipe saved successfully!', userRecipe });
+    } catch (error) {
+        console.error('Error saving recipe:', error);
+        res.status(500).json({ message: 'Internal Server Error' });
     }
 });
 
-router.post('/', async(req: Request, res: Response) => {
-    const { id, username } = req.body;
-    try{
-        const recipes = await UserRecipe.create ({
-            username,
-            recipe: id,
-        });
-        if(recipes) {
-            res.json(recipes);
-        } else {
-            res.status(404).json({message: 'No recipes saved'})
-        }
 
-    } catch (error: any){
-        res.status(500).json({message: error.message});
+router.get('/:username', async (req: Request, res: Response) => {
+    const { username } = req.params;
+
+    try {
+        const savedRecipes = await UserRecipe.findAll({ where: { username } });
+        res.status(200).json(savedRecipes);
+    } catch (error) {
+        console.error('Error fetching saved recipes:', error);
+        res.status(500).json({ message: 'Internal Server Error' });
     }
 });
 
-export {router as userRecipeRouter};
+export { router as userRecipeRouter };

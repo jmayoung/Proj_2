@@ -4,16 +4,17 @@ import './loginModal.css';
 interface LoginModalProps {
     show: boolean;
     handleClose: () => void;
+    onLoginSuccess: (username: string) => void; // Add the onLoginSuccess prop
 }
 
-const LoginModal: React.FC<LoginModalProps> = ({ show, handleClose }) => {
+const LoginModal: React.FC<LoginModalProps> = ({ show, handleClose, onLoginSuccess }) => {
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-    const [isSignUp, setIsSignUp] = useState<boolean>(false);  // Track whether the user is signing up or logging in
+    const [isSignUp, setIsSignUp] = useState<boolean>(false);  
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const endpoint = isSignUp ? '/auth/register' : '/auth/login';  // Switch between login and signup
+        const endpoint = isSignUp ? '/auth/register' : '/auth/login';  
         try {
             const response = await fetch(endpoint, {
                 method: 'POST',
@@ -22,11 +23,11 @@ const LoginModal: React.FC<LoginModalProps> = ({ show, handleClose }) => {
                 },
                 body: JSON.stringify({ username, password }),
             });
-            console.log(response);
             if (response.ok) {
                 const data = await response.json();
                 alert(data.message);
-                handleClose();
+                onLoginSuccess(username); 
+                handleClose(); 
             } else {
                 const errorData = await response.json();
                 alert(errorData.message);
@@ -44,7 +45,6 @@ const LoginModal: React.FC<LoginModalProps> = ({ show, handleClose }) => {
                 <div className="modal-content">
                     <button onClick={handleClose} className="close-button">X</button>
 
-                    {/* Toggle between Login and Sign Up */}
                     <div className="toggle-buttons">
                         <button 
                             className={isSignUp ? '' : 'active'} 

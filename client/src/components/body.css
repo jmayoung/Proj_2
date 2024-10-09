@@ -2,17 +2,20 @@
     padding: 20px;
     margin: 0 auto;
     max-width: 800px;
+    background-color: aquamarine;
+    border-radius: 20px;
 }
 
 .title {
     font-size: 30px;
-    color: #ccc;
+    color: #bbadad;
     background-color: #fef9c7;
+    border-radius: 20px;
 }
 
 .subtitle {
     font-size: 20px;
-    color: #fef9c7;
+    color: #572bbd;
     margin-bottom: 20px;
 }
 
@@ -39,22 +42,45 @@
     background-color: #026670;
 }
 
-.ingredient-list, .recipe-list {
+.ingredient-list {
     list-style-type: none;
     padding: 0;
 }
 
-.ingredient-item, .recipe-item {
+.ingredient-item {
     padding: 10px;
     margin-bottom: 5px;
     border-bottom: 1px solid #ccc;
 }
 
-.recipe-title {
-    font-size: 1.2rem;
-    color: #333;
+.recipe-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
+    gap: 20px;
+}
+
+.recipe-item {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    transition: transform 0.2s ease;
+}
+
+.recipe-item:hover {
+    transform: scale(1.05);
 }
 
 .recipe-image {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.recipe-title {
+    font-size: 1rem;
+    color: #333;
     margin-top: 10px;
 }
+

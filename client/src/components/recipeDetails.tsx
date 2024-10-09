@@ -8,11 +8,12 @@ const RecipeDetails = () => {
     const [recipeImage, setRecipeImage] = useState<string>('');  
     const [recipeTitle, setRecipeTitle] = useState<string>('');  
     const [recipeLink, setRecipeLink] = useState<string>('');    
+    const [username, setUsername] = useState<string>('');
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchRecipeDetails = async () => {
-            const apiKey = 'YOUR_SPOONACULAR_API_KEY';
+            const apiKey = '512a655e48f54350ab4a1694077b9966';
             try {
                 const response = await fetch(
                     `https://api.spoonacular.com/recipes/${id}/information?apiKey=${apiKey}`
@@ -28,6 +29,31 @@ const RecipeDetails = () => {
         };
         fetchRecipeDetails();
     }, [id]); 
+
+    const handleSaveRecipe = async () => {
+        try {
+            const response = await fetch('/userRecipe', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    recipeId: id,  
+                    username: username, 
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to save recipe');
+            }
+
+            const data = await response.json();
+            alert(data.message);  
+        } catch (error) {
+            console.error('Error saving recipe:', error);
+            alert('Could not save recipe. Please try again.');
+        }
+    };
 
     return (
         <div className="recipe-details-container">
@@ -50,6 +76,8 @@ const RecipeDetails = () => {
                     </a>
                 </p>
             )}
+
+            <button onClick={handleSaveRecipe} className="save-recipe-button">Save Recipe</button>
         </div>
     );
 };

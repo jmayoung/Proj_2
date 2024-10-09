@@ -4,14 +4,14 @@ import sequelize from '../config/connection.js';
 interface UserRecipeAttributes {
   id: number;
   username: string;
-  recipe: number;
+  recipeID: number;
 }
 interface UserRecipeCreationAttributes extends Optional<UserRecipeAttributes, 'id'> {}
 
 export class UserRecipe extends Model <UserRecipeAttributes,UserRecipeCreationAttributes> implements UserRecipeAttributes {
   public id!: number;
   public username!: string;
-  public recipe!: number;
+  public recipeID!: number;
 }
 export function UserRecipeFactory(sequelize: Sequelize): typeof UserRecipe {
   UserRecipe.init({
@@ -25,7 +25,7 @@ export function UserRecipeFactory(sequelize: Sequelize): typeof UserRecipe {
       allowNull: false,
       unique: true,
     },
-    recipe: {
+    recipeID: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
