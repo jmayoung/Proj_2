@@ -6,13 +6,15 @@ interface UserAttributes {
   username: string;
   password: string;
 }
+
 interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {}
 
-export class User extends Model <UserAttributes,UserCreationAttributes> implements UserAttributes {
+export class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
   public id!: number;
-  public username!: string;
-  public password!: string;
+  public username!: string; 
+  public password!: string; 
 }
+
 export function UserFactory(sequelize: Sequelize): typeof User {
   User.init({
     id: {
@@ -32,7 +34,9 @@ export function UserFactory(sequelize: Sequelize): typeof User {
   }, {
     sequelize, 
     modelName: 'User',
-  })
-  return User};
-
-
+    tableName: 'Users',
+    timestamps: true,
+  });
+  
+  return User;
+};

@@ -1,16 +1,16 @@
 import { Router, Request, Response } from 'express';
-import { User }  from '../models/index.js';  // Import the User model
+import { User }  from '../models/index.js'; 
 import jwt from 'jsonwebtoken';  // Import the JSON Web Token library
 import bcrypt from 'bcrypt';  // Import bcrypt for password hashing
 
 // Register function to create a new user
 export const register = async (req: Request, res: Response) => {
   const { username, password } = req.body;
-  console.log('Registering user:', username); // Log the username
+  console.log('Registering user:', username); 
 
   try {
     const existingUser = await User.findOne({ where: { username } });
-    console.log('Existing user:', existingUser); // Log the existing user
+    console.log('Existing user:', existingUser); 
 
     if (existingUser) {
       return res.status(400).json({ message: 'Username already taken' });
@@ -20,7 +20,9 @@ export const register = async (req: Request, res: Response) => {
     const newUser = await User.create({
       username,
       password: hashedPassword,
-    });
+    }
+  );
+  console.log(hashedPassword);
 
     const secretKey = process.env.JWT_SECRET_KEY || '';
     const token = jwt.sign({ username }, secretKey, { expiresIn: '1h' });
@@ -40,29 +42,37 @@ export const register = async (req: Request, res: Response) => {
 
 // Login function to authenticate a user
 export const login = async (req: Request, res: Response) => {
-  const { username, password } = req.body;  // Extract username and password from request body
+  try {
+    const { username, password } = req.body;
+    const user = await User.findOne({ 
+      where: { username } 
+    });
 
-  // Find the user in the database by username
-  const user = await User.findOne({
-    where: { username },
-  });
+    if (!user) {
+      console.log("User not found");
+      return res.status(401).json({ message: 'Authentication failed' });
+    }
 
-  // If user is not found, send an authentication failed response
-  if (!user) {
-    console.log("User not found")
-    return res.status(401).json({ message: 'Authentication failed' });
+    // Log the passwords for debugging
+    console.log('User password from DB:', user);
+    console.log('Password provided by user:', password);
+
+    const passwordIsValid = await bcrypt.compare(password, user.password);
+    if (!passwordIsValid) {
+      return res.status(401).json({ message: 'Authentication failed' });
+    }
+
+    const secretKey = process.env.JWT_SECRET_KEY || '';
+    const token = jwt.sign({ username }, secretKey, { expiresIn: '1h' });
+
+    return res.json({ token });
+  } catch (error) {
+    console.error('Error during login:', error); 
+    return res.status(500).json({ message: 'Internal server error' });
   }
-
-  // Compare the provided password with the stored hashed password
-  const passwordIsValid = await bcrypt.compare(password, user.password);
-  if (!passwordIsValid) {
-    return res.status(401).json({ message: 'Authentication failed' });
-  }
-
-  const secretKey = process.env.JWT_SECRET_KEY || '';
-  const token = jwt.sign({ username }, secretKey, { expiresIn: '1h' });
-  return res.json({ token });
 };
+
+
 
 // Create a new router instance
 const router = Router();
