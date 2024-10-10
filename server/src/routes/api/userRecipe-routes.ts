@@ -8,7 +8,6 @@ interface SaveRecipeRequestBody {
     recipeID: number;
 }
 
-// POST route to save a recipe
 router.post('/', async (req: Request<{}, {}, SaveRecipeRequestBody>, res: Response) => {
     const { username, recipeID } = req.body;  
 

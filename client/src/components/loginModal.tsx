@@ -4,7 +4,7 @@ import './loginModal.css';
 interface LoginModalProps {
     show: boolean;
     handleClose: () => void;
-    onLoginSuccess: (username: string) => void; // Add the onLoginSuccess prop
+    onLoginSuccess: (username: string) => void; 
 }
 
 const LoginModal: React.FC<LoginModalProps> = ({ show, handleClose, onLoginSuccess }) => {
@@ -25,7 +25,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ show, handleClose, onLoginSucce
             });
             if (response.ok) {
                 const data = await response.json();
-                alert(data.message);
+                alert("Login successful");
                 onLoginSuccess(username); 
                 handleClose(); 
             } else {
