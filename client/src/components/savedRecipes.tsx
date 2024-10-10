@@ -1,16 +1,20 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './SavedRecipes.css';
+//import './SavedRecipes.css';
 
-const SavedRecipes = () => {
+interface savedRecipesProps {
+    username: string;
+}
+
+const SavedRecipes = ({username}: savedRecipesProps) => {
     const [recipes, setRecipes] = useState<any[]>([]);
     const navigate = useNavigate();
-    const username = 
+    
 
     useEffect(() => {
         const fetchSavedRecipes = async () => {
             try {
-                const response = await fetch(`/userRecipes/${username}`);
+                const response = await fetch(`/api/userRecipes/${username}`);
                 const data = await response.json();
                 setRecipes(data.recipes);
             } catch (error) {

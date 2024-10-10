@@ -2,7 +2,11 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './RecipeDetails.css';
 
-const RecipeDetails = () => {
+interface recipeDetailProps {
+    token: string;
+}
+
+const RecipeDetails = ({token}: recipeDetailProps) => {
     const { id } = useParams<{ id: string }>();  
     const [ingredients, setIngredients] = useState<any[]>([]);
     const [recipeImage, setRecipeImage] = useState<string>('');  
@@ -10,6 +14,7 @@ const RecipeDetails = () => {
     const [recipeLink, setRecipeLink] = useState<string>('');    
     const [username, setUsername] = useState<string>('');
     const navigate = useNavigate();
+
 
     useEffect(() => {
         const fetchRecipeDetails = async () => {
@@ -32,13 +37,14 @@ const RecipeDetails = () => {
 
     const handleSaveRecipe = async () => {
         try {
-            const response = await fetch('/userRecipe', {
+            const response = await fetch('/api/userRecipe', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `bearer ${token}`
                 },
                 body: JSON.stringify({
-                    recipeId: id,  
+                    recipeID: id,  
                     username: username, 
                 }),
             });

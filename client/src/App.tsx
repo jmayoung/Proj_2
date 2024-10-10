@@ -7,10 +7,12 @@ import CocktailBody from './components/cocktailBody';
 import CocktailDetails from './components/cocktailDetails'; 
 import Navbar from './components/Navbar';
 import LoginModal from './components/loginModal'; // Import LoginModal
+import SavedRecipes from './components/savedRecipes';
 
 const App = () => {
     const [showModal, setShowModal] = useState<boolean>(false);
     const [username, setUsername] = useState<string>("");
+    const [token, setToken] = useState<string>("");
 
     const handleLoginClick = () => {
         setShowModal(true);
@@ -20,9 +22,10 @@ const App = () => {
         setShowModal(false);
     };
 
-    const handleLoginSuccess = (username: string) => {
+    const handleLoginSuccess = (username: string, token: string) => {
         setUsername(username);
         setShowModal(false); // Optionally close modal after successful login
+        setToken(token);
     };
 
     return (
@@ -32,7 +35,8 @@ const App = () => {
                 <Route path="/" element={<Body />} />
                 <Route path="/cocktail" element={<CocktailBody />} />
                 <Route path="/cocktail/:id" element={<CocktailDetails />} /> 
-                <Route path="/recipe/:id" element={<RecipeDetails />} />
+                <Route path="/recipe/:id" element={<RecipeDetails token = { token }/>} />
+                <Route path="/saved-recipes" element={<SavedRecipes username={ username }/>} />
             </Routes>
             <LoginModal 
                 show={showModal} 
