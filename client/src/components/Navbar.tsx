@@ -11,6 +11,7 @@ const Navbar: React.FC<NavbarProps> = ({ onLoginClick, username }) => {
     return (
         <nav className="navbar">
             <ul>
+                <li><Link to= "/home">Home</Link></li>
                 <li><Link to="/cocktail">Cocktail Recipes</Link></li> 
                 <li><Link to="/saved-recipes">Saved Recipes</Link></li>
                 <li style={{ cursor: 'pointer' }} onClick={username ? undefined : onLoginClick}>
