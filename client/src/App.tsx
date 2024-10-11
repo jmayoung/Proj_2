@@ -35,8 +35,8 @@ const App = () => {
                 <Route path="/" element={<Body />} />
                 <Route path="/cocktail" element={<CocktailBody />} />
                 <Route path="/cocktail/:id" element={<CocktailDetails />} /> 
-                <Route path="/recipe/:id" element={<RecipeDetails token = { token }/>} />
-                <Route path="/saved-recipes" element={<SavedRecipes username={ username }/>} />
+                <Route path="/recipe/:id" element={<RecipeDetails token = { token } username= {username}/>} />
+                <Route path="/saved-recipes" element={<SavedRecipes username={ username } token = { token }/>} />
             </Routes>
             <LoginModal 
                 show={showModal} 

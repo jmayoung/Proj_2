@@ -3,16 +3,16 @@ import { useParams, useNavigate } from 'react-router-dom';
 import './RecipeDetails.css';
 
 interface recipeDetailProps {
+    username: string;
     token: string;
 }
 
-const RecipeDetails = ({token}: recipeDetailProps) => {
+const RecipeDetails = ({token, username}: recipeDetailProps) => {
     const { id } = useParams<{ id: string }>();  
     const [ingredients, setIngredients] = useState<any[]>([]);
     const [recipeImage, setRecipeImage] = useState<string>('');  
     const [recipeTitle, setRecipeTitle] = useState<string>('');  
     const [recipeLink, setRecipeLink] = useState<string>('');    
-    const [username, setUsername] = useState<string>('');
     const navigate = useNavigate();
 
 

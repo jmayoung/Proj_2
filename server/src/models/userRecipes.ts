@@ -23,7 +23,6 @@ export function UserRecipeFactory(sequelize: Sequelize): typeof UserRecipe {
     username: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
     },
     recipeID: {
       type: DataTypes.INTEGER,
