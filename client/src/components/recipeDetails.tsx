@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import './RecipeDetails.css';
+//import './RecipeDetails.css';
 
 interface recipeDetailProps {
     username: string;
